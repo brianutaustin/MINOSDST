@@ -3,8 +3,9 @@
 DST::DST() {
 }
 
-DST::DST(std : string dstLocation) {
+DST::DST(std::string dstLocation) {
   DSTFilesLocation = dstLocation;
+  HistogramVector.reserve(4);
 }
 
 DST::~DST() {
@@ -13,7 +14,7 @@ DST::~DST() {
 void DST::OpenDSTs(std::string treeName) {
   TreeName = treeName;
   TreeChain = new TChain(TreeName.c_str(), TreeName.c_str());
-  std::string DSTlist = DSTFilesLocation + "/*.root";
+  std::string dummyDSTlist = DSTFilesLocation + "/*.root";
   TreeChain->Add(dummyDSTlist.c_str());
 
   return;
@@ -57,40 +58,60 @@ void DST::CodeNameParsing() {
   RunCodeName = token;
   token = RunCodeName.erase(3, RunCodeName.length() - 5);
   RunCodeName = token;
-  cout << "POT " << RunCodeName << " :" << POT << "." << endl;
+  std::cout << "POT " << RunCodeName << " :" << POT << "." << std::endl;
 
-  return
+  return;
 }
 
-void DST::SetHistograms() {
-  TString histogramName;
-  TString histogramTitle;
+void DST::GetHistogramNameStrings(HistogramIndex histIndex) {
+  TString variableName;
 
-  histogramTitle = "Shower Energy - " + RunCodeName;
-  histogramName = "shEn" + RunCodeName;
-  shEn = new TH1D(histogramName, histogramTitle, NBins, EnergyRangeMinimum, EnergyRangeMinimum);
+  switch (histIndex) {
+    case kShEn: {
+      variableName = "shwEnkNN";
+      break;
+    }
+    case kTrEn: {
+      variableName = "trkEn";
+      break;
+    }
+    case kCCEn: {
+      variableName = "energyCC";
+      break;
+    }
+    case kNCEn: {
+      variableName = "energyNC";
+      break;
+    }
+  }
 
-  histogramTitle = "Track Energy - " + RunCodeName;
-  histogramName = "trEn" + RunCodeName;
-  trEn = new TH1D(histogramName, histogramTitle, NBins, EnergyRangeMinimum, EnergyRangeMinimum);
+  HistogramNameString.HistogramName = variableName + RunCodeName;
+  HistogramNameString.HistogramTitle = variableName + RunCodeName;
+  HistogramNameString.HistogramXAxisTitle = variableName + "[GeV]";
+  HistogramNameString.HistogramYAxisTitle = "Entries";
+  HistogramNameString.TreeChainHistogramName = variableName;
 
-  histogramTitle = "Charge Current Energy - " + RunCodeName;
-  histogramName = "ccEn" + RunCodeName;
-  ccEn = new TH1D(histogramName, histogramTitle, NBins, EnergyRangeMinimum, EnergyRangeMinimum);
+  return;
+}
 
-  histogramTitle = "Neutral Current Energy - " + RunCodeName;
-  histogramName = "ncEn" + RunCodeName;
-  ncEn = new TH1D(histogramName, histogramTitle, NBins, EnergyRangeMinimum, EnergyRangeMinimum);
+void DST::SetHistograms(HistogramIndex histIndex) {
+
+  GetHistogramNameStrings(histIndex);
+  TH1D * dummyHistogram = new TH1D(HistogramNameString.HistogramName, HistogramNameString.HistogramTitle, NBins, BinningScheme);
+  dummyHistogram->GetXaxis()->SetTitle(HistogramNameString.HistogramXAxisTitle);
+  dummyHistogram->GetXaxis()->SetTitle(HistogramNameString.HistogramYAxisTitle);
+  dummyHistogram->SetLineColor(histIndex + 1);
 
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
     if (TreeChain->GetLeaf("selectionevent")->GetValue()) {
-      shEn->Fill(TreeChain->GetLeaf("shwEnkNN")->GetValue());
-      CCEn->Fill(TreeChain->GetLeaf("energyCC")->GetValue());
-      NCEn->Fill(TreeChain->GetLeaf("energyNC")->GetValue());
-      trEn->Fill(TreeChain->GetLeaf("trkEn")->GetValue());
+      dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
     }
   }
+
+  dummyHistogram->Scale(1 / (POT * (1E-18)));
+  dummyHistogram->Sumw2();
+  HistogramVector.at(histIndex) = dummyHistogram;
 
   return;
 }
@@ -125,14 +146,6 @@ void DST::SetBinningScheme() {
   return;
 }
 
-TH1D* DST::GetHistogram(HistogramIndex histIndex) {
-  if (histIndex == kShEn) {
-    return shEn;
-  } else if (histIndex == kTrEn) {
-    return trEn;
-  } else if (histIndex == kCCEn) {
-    return ccEn;
-  } else if (histIndex == kNCEn) {
-    return ncEn;
-  }
+TH1D * DST::GetHistogram(HistogramIndex histIndex) {
+  return HistogramVector.at(histIndex);
 }

@@ -1,5 +1,5 @@
-#ifndef DST_h
-#define DST_h
+#ifndef DST_H
+#define DST_H
 
 #include "TH1D.h"
 #include "TChain.h"
@@ -7,9 +7,9 @@
 #include "TFile.h"
 #include "TROOT.h"
 #include "TObjArray.h"
-#include "TIter.h"
 #include "TChainElement.h"
 #include "TString.h"
+#include "TLeaf.h"
 
 #include <iostream>
 #include <vector>
@@ -17,11 +17,21 @@
 #include <cmath>
 #include <fstream>
 
+const int NBins = 50;
+
 enum HistogramIndex {
   kShEn,
   kCCEn,
   kNCEn,
   kTrEn
+};
+
+struct HISTOGRAMSTRING {
+  TString HistogramName;
+  TString HistogramTitle;
+  TString HistogramXAxisTitle;
+  TString HistogramYAxisTitle;
+  TString TreeChainHistogramName;
 };
 
 class DST {
@@ -38,12 +48,13 @@ public:
 
   // SET
   void SetNumberOfEvents(int);
-  void SetHistograms();
+  void SetHistograms(HistogramIndex);
   void SetBinningScheme();
 
 private:
   void CalculatePOT();
   void CodeNameParsing(); // Each run has a code name
+  void GetHistogramNameStrings(HistogramIndex);
 
 private:
   std::string DSTFilesLocation;
@@ -56,15 +67,12 @@ private:
 
   std::string RunCodeName;
 
-  const int NBins = 50;
   double BinningScheme[NBins + 1];
 
-  TH1D* shEn;
-  TH1D* trEn;
-  TH1D* CCEn;
-  TH1D* NCEn;
+  HISTOGRAMSTRING HistogramNameString;
+  std::vector<TH1D*> HistogramVector;
 
   int NumberOfEvents;
-}
+};
 
 #endif
