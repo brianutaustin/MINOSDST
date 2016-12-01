@@ -45,6 +45,10 @@ double DST::GetPOT() {
   return POT;
 }
 
+std::string DST::GetRunCodeName() {
+  return RunCodeName;
+}
+
 void DST::CodeNameParsing() {
   std::string delimiter = "_";
 

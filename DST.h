@@ -45,6 +45,7 @@ public:
   // GET
   double GetPOT();
   TH1D* GetHistogram(HistogramIndex);
+  std::string GetRunCodeName();
 
   // SET
   void SetNumberOfEvents(int);
