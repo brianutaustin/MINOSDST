@@ -12,7 +12,7 @@ Analysis::~Analysis() {
 
 void Analysis::ImportBaseDST(DST * baseDST) {
   BaseRun.TheDST = baseDST;
-  BaseRun.TheHistogram = baseDST->GetHistogram(AnalysisIndex);
+  BaseRun.TheHistogram = (TH1D *) baseDST->GetHistogram(AnalysisIndex)->Clone();
   BaseRun.TheCodeName = baseDST->GetRunCodeName();
 
   return;
@@ -49,19 +49,21 @@ void Analysis::DrawHistogram() {
     BaseRun.TheHistogram->GetYaxis()->SetTitle(PlotString.HistogramYAxisTitle);
     BaseRun.TheHistogram->SetLineColor(kBlack);
     BaseRun.TheHistogram->SetLineWidth(3);
+    BaseRun.TheHistogram->GetYaxis()->SetRangeUser(1, 10000);
     BaseRun.TheHistogram->Draw();
   }
 
-  TLegend * Legend = new TLegend(0.6, 0.6, 0.85, 0.85);
+  TLegend * Legend = new TLegend(0.75, 0.75, 0.95, 0.95);
 
   if (CompareRuns.size() == 0) {
     std::cout << "Compare DST has to be input." << std::endl;
   } else {
     for (int i = 0; i < CompareRuns.size(); i++) {
-      Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
+      CompareRuns.at(i).TheHistogram->SetLineColor(i + 2);
+      CompareRuns.at(i).TheHistogram->Draw("same");
     }
     for (int i = 0; i < CompareRuns.size(); i++) {
-      CompareRuns.at(i).TheHistogram->Draw("same");
+      Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
     }
   }
 
@@ -70,7 +72,6 @@ void Analysis::DrawHistogram() {
     Canvas->SetLogy();
   }
   Canvas->SaveAs(PlotString.HistogramPlotFileName);
-
   return;
 }
 
@@ -105,7 +106,8 @@ void Analysis::GetPlotString() {
   PlotString.HistogramTitle = "Comparison of " + VariableName;
   PlotString.RatioHistogramTitle = "Ratio Comparison of " + VariableName;
   for (int i = 0; i < CompareRuns.size(); i++) {
-    PlotString.RatioHistogramLegend.at(i) = CompareRuns.at(i).TheCodeName + "/" + BaseRun.TheCodeName;
+    PlotString.RatioHistogramLegend.push_back(CompareRuns.at(i).TheCodeName + "/" + BaseRun.TheCodeName);
+    std::cout << PlotString.RatioHistogramLegend.at(i) << std::endl;
   }
   PlotString.HistogramPlotFileName = "spectrum_" + VariableName + "." + ImageFormat;
   PlotString.RatioHistogramPlotFileName = "ratio_" + VariableName + "." + ImageFormat;

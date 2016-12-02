@@ -121,7 +121,6 @@ void DST::SetHistograms(HistogramIndex histIndex) {
     }
   }
 
-  CalculatePOT();
   dummyHistogram->Scale(1 / (POT * (1E-18)));
   dummyHistogram->Sumw2();
   HistogramVector.push_back(dummyHistogram);

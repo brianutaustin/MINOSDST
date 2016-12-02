@@ -41,6 +41,8 @@ public:
   ~DST();
 
   void OpenDSTs(std::string); // Input: Name of anaTree
+  void CalculatePOT();
+  void CodeNameParsing(); // Each run has a code name
 
   // GET
   double GetPOT();
@@ -54,8 +56,6 @@ public:
   void SetBinningScheme();
 
 private:
-  void CalculatePOT();
-  void CodeNameParsing(); // Each run has a code name
   void GetHistogramNameStrings(HistogramIndex);
 
 private:
