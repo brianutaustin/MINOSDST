@@ -60,7 +60,7 @@ private:
   RUNDATA BaseRun;
   std::vector<RUNDATA> CompareRuns;
 
-  bool LogScaleFlag = true;
+  bool LogScaleFlag;
 
   TCanvas* Canvas;
   TCanvas* RatioCanvas;
