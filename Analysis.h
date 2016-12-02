@@ -49,7 +49,7 @@ public:
   void ImportCompareDSTs(DST*);
   void SetImageFileFormat(std::string);
   void DrawWithLogScale(bool);
-  void Draw();
+  void DrawHistogram();
 
 private:
   void GetPlotString();

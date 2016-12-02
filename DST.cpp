@@ -5,7 +5,6 @@ DST::DST() {
 
 DST::DST(std::string dstLocation) {
   DSTFilesLocation = dstLocation;
-  HistogramVector.reserve(4);
 }
 
 DST::~DST() {
@@ -98,6 +97,13 @@ void DST::GetHistogramNameStrings(HistogramIndex histIndex) {
   return;
 }
 
+void DST::SetUnslipstackedBatches(int min, int max) {
+  UnslipstackedMinBatchIndex = min;
+  UnslipstackedMaxBatchIndex = max;
+
+  return;
+}
+
 void DST::SetHistograms(HistogramIndex histIndex) {
 
   GetHistogramNameStrings(histIndex);
@@ -109,13 +115,16 @@ void DST::SetHistograms(HistogramIndex histIndex) {
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
     if (TreeChain->GetLeaf("selectionevent")->GetValue()) {
-      dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
+      if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
+        dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
+      }
     }
   }
 
+  CalculatePOT();
   dummyHistogram->Scale(1 / (POT * (1E-18)));
   dummyHistogram->Sumw2();
-  HistogramVector.at(histIndex) = dummyHistogram;
+  HistogramVector.push_back(dummyHistogram);
 
   return;
 }

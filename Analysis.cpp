@@ -12,7 +12,7 @@ Analysis::~Analysis() {
 
 void Analysis::ImportBaseDST(DST * baseDST) {
   BaseRun.TheDST = baseDST;
-  BaseRun.TheHistogram = (TH1D *) baseDST->GetHistogram(AnalysisIndex)->Clone();
+  BaseRun.TheHistogram = baseDST->GetHistogram(AnalysisIndex);
   BaseRun.TheCodeName = baseDST->GetRunCodeName();
 
   return;
@@ -36,26 +36,39 @@ void Analysis::DrawWithLogScale(bool drawWithLogScale) {
   return;
 }
 
-void Analysis::Draw() {
+void Analysis::DrawHistogram() {
   gStyle->SetOptStat(0);
   GetPlotString();
 
   Canvas = new TCanvas();
-  BaseRun.TheHistogram->SetTitle(PlotString.HistogramTitle);
-  BaseRun.TheHistogram->GetXaxis()->SetTitle(PlotString.HistogramXAxisTitle);
-  BaseRun.TheHistogram->GetYaxis()->SetTitle(PlotString.HistogramYAxisTitle);
-  BaseRun.TheHistogram->SetLineColor(kBlack);
-  BaseRun.TheHistogram->SetLineWidth(3);
+  if (&BaseRun == NULL) {
+    std::cout << "Base DST has to be input." << std::endl;
+  } else {
+    BaseRun.TheHistogram->SetTitle(PlotString.HistogramTitle);
+    BaseRun.TheHistogram->GetXaxis()->SetTitle(PlotString.HistogramXAxisTitle);
+    BaseRun.TheHistogram->GetYaxis()->SetTitle(PlotString.HistogramYAxisTitle);
+    BaseRun.TheHistogram->SetLineColor(kBlack);
+    BaseRun.TheHistogram->SetLineWidth(3);
+    BaseRun.TheHistogram->Draw();
+  }
 
   TLegend * Legend = new TLegend(0.6, 0.6, 0.85, 0.85);
-  for (int i = 0; i < CompareRuns.size(); i++) {
-    Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
+
+  if (CompareRuns.size() == 0) {
+    std::cout << "Compare DST has to be input." << std::endl;
+  } else {
+    for (int i = 0; i < CompareRuns.size(); i++) {
+      Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
+    }
+    for (int i = 0; i < CompareRuns.size(); i++) {
+      CompareRuns.at(i).TheHistogram->Draw("same");
+    }
   }
-  BaseRun.TheHistogram->Draw();
-  for (int i = 0; i < CompareRuns.size(); i++) {
-    CompareRuns.at(i).TheHistogram->Draw("same");
-  }
+
   Legend->Draw();
+  if (LogScaleFlag) {
+    Canvas->SetLogy();
+  }
   Canvas->SaveAs(PlotString.HistogramPlotFileName);
 
   return;

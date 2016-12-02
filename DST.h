@@ -49,6 +49,7 @@ public:
 
   // SET
   void SetNumberOfEvents(int);
+  void SetUnslipstackedBatches(int, int); // Min and max of unslipstacked batches number
   void SetHistograms(HistogramIndex);
   void SetBinningScheme();
 
@@ -74,6 +75,9 @@ private:
   std::vector<TH1D*> HistogramVector;
 
   int NumberOfEvents;
+
+  int UnslipstackedMinBatchIndex;
+  int UnslipstackedMaxBatchIndex;
 };
 
 #endif
