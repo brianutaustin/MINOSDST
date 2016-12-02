@@ -4,7 +4,7 @@
 #include <iostream>
 
 int main() {
-  DST * DST_Run12 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run12/");
+  DST * DST_Run12 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run12Test/");
   DST_Run12->OpenDSTs("timeTree");
   DST_Run12->SetBinningScheme();
   DST_Run12->SetNumberOfEvents(10000);
@@ -14,7 +14,7 @@ int main() {
   DST_Run12->SetHistograms(kNCEn);
   DST_Run12->SetHistograms(kTrEn);
 
-  DST * DST_Run13_1 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run13_Nov15/");
+  DST * DST_Run13_1 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run13_Nov15Test/");
   DST_Run13_1->OpenDSTs("timeTree");
   DST_Run13_1->SetBinningScheme();
   DST_Run13_1->SetNumberOfEvents(10000);
