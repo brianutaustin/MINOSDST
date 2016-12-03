@@ -139,6 +139,7 @@ void DST::SetNumberOfEvents(int flag) {
 }
 
 void DST::SetBinningScheme() {
+/* Tom's binning
   for (int k = 0; k <= 40; k++) {
     BinningScheme[k] = k * 0.25;
   }
@@ -153,6 +154,19 @@ void DST::SetBinningScheme() {
   }
   for (int k = 49; k <= 50; k++) {
     BinningScheme[k] = 22 + 4 * (k - 48);
+  }
+*/
+
+/* Dung's binning
+*/
+  for (int k = 0; k <= 10; k++) {
+    BinningScheme[k] = k;
+  }
+  for (int k = 11; k <= 15; k++) {
+    BinningScheme[k] = 10 + 2 * (k - 10);
+  }
+  for (int k = 16; k <= 17; k++) {
+    BinningScheme[k] = 20 + 5 * (k - 15);
   }
 
   return;

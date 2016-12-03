@@ -13,6 +13,7 @@
 #include "TLeaf.h"
 #include "TCanvas.h"
 #include "TLegend.h"
+#include "TLine.h"
 
 #include <iostream>
 #include <vector>
@@ -50,8 +51,7 @@ public:
   void SetImageFileFormat(std::string);
   void DrawWithLogScale(bool);
   void DrawHistogram();
-
-private:
+  void DrawRatioHistogram();
   void GetPlotString();
 
 private:

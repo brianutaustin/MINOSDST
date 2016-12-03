@@ -38,7 +38,7 @@ void Analysis::DrawWithLogScale(bool drawWithLogScale) {
 
 void Analysis::DrawHistogram() {
   gStyle->SetOptStat(0);
-  GetPlotString();
+  TLegend * Legend = new TLegend(0.75, 0.75, 0.95, 0.95);
 
   Canvas = new TCanvas();
   if (&BaseRun == NULL) {
@@ -51,9 +51,8 @@ void Analysis::DrawHistogram() {
     BaseRun.TheHistogram->SetLineWidth(3);
     BaseRun.TheHistogram->GetYaxis()->SetRangeUser(1, 10000);
     BaseRun.TheHistogram->Draw();
+    Legend->AddEntry(BaseRun.TheHistogram, BaseRun.TheCodeName.c_str(), "l");
   }
-
-  TLegend * Legend = new TLegend(0.75, 0.75, 0.95, 0.95);
 
   if (CompareRuns.size() == 0) {
     std::cout << "Compare DST has to be input." << std::endl;
@@ -61,8 +60,6 @@ void Analysis::DrawHistogram() {
     for (int i = 0; i < CompareRuns.size(); i++) {
       CompareRuns.at(i).TheHistogram->SetLineColor(i + 2);
       CompareRuns.at(i).TheHistogram->Draw("same");
-    }
-    for (int i = 0; i < CompareRuns.size(); i++) {
       Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
     }
   }
@@ -73,6 +70,40 @@ void Analysis::DrawHistogram() {
   }
   Canvas->SaveAs(PlotString.HistogramPlotFileName);
   return;
+}
+
+void Analysis::DrawRatioHistogram() {
+  gStyle->SetOptStat(0);
+
+  Canvas = new TCanvas();
+  TLegend * Legend = new TLegend(0.75, 0.75, 0.95, 0.95);
+
+	for (int i = 0; i < CompareRuns.size(); i++) {
+    CompareRuns.at(i).TheRatioHistogram->SetTitle(PlotString.RatioHistogramTitle);
+    CompareRuns.at(i).TheRatioHistogram->Divide(BaseRun.TheHistogram);
+    for(int jbin = 0; jbin < CompareRuns.at(i).TheRatioHistogram->GetNbinsX(); jbin++){
+  		double binerr = CompareRuns.at(i).TheHistogram->GetBinError(jbin)/BaseRun.TheHistogram->GetBinContent(jbin) - (CompareRuns.at(i).TheHistogram->GetBinContent(jbin))*(BaseRun.TheHistogram->GetBinError(jbin))/((BaseRun.TheHistogram->GetBinContent(jbin))*(BaseRun.TheHistogram->GetBinContent(jbin)));
+  		CompareRuns.at(i).TheRatioHistogram->SetBinError(jbin, binerr);
+  	}
+    CompareRuns.at(i).TheRatioHistogram->GetXaxis()->SetTitle(PlotString.HistogramXAxisTitle);
+    CompareRuns.at(i).TheRatioHistogram->GetYaxis()->SetTitle("");
+    CompareRuns.at(i).TheRatioHistogram->SetLineColor(i + 2);
+    Legend->AddEntry(CompareRuns.at(i).TheRatioHistogram, PlotString.RatioHistogramLegend.at(i), "l");
+  }
+
+  CompareRuns.at(0).TheRatioHistogram->Draw();
+  CompareRuns.at(0).TheRatioHistogram->GetYaxis()->SetRangeUser(0.7, 1.3);
+  for (int i = 1; i < CompareRuns.size(); i++) {
+    CompareRuns.at(i).TheRatioHistogram->Draw("same");
+  }
+	TLine * UnityLine = new TLine(0, 1, 30, 1);
+  UnityLine->SetLineColor(kBlack);
+  UnityLine->SetLineWidth(2);
+  UnityLine->SetLineStyle(4);
+	UnityLine->Draw("same");
+  Legend->Draw();
+
+	Canvas->SaveAs(PlotString.RatioHistogramPlotFileName);
 }
 
 void Analysis::SetImageFileFormat(std::string theFormatExtension) {

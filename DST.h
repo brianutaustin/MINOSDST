@@ -17,7 +17,7 @@
 #include <cmath>
 #include <fstream>
 
-const int NBins = 50;
+const int NBins = 17;
 
 enum HistogramIndex {
   kShEn,
