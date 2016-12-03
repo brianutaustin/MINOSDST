@@ -46,6 +46,8 @@ int main() {
   DST_Run13_3->SetBinningScheme();
   DST_Run13_3->SetNumberOfEvents(-1);
   DST_Run13_3->SetUnslipstackedBatches(4, 5);
+  DST_Run13_3->CalculatePOT();
+  DST_Run13_3->CodeNameParsing();
   DST_Run13_3->SetHistograms(kShEn);
   DST_Run13_3->SetHistograms(kCCEn);
   DST_Run13_3->SetHistograms(kNCEn);
@@ -56,6 +58,8 @@ int main() {
   DST_Run13_4->SetBinningScheme();
   DST_Run13_4->SetNumberOfEvents(-1);
   DST_Run13_4->SetUnslipstackedBatches(4, 5);
+  DST_Run13_4->CalculatePOT();
+  DST_Run13_4->CodeNameParsing();
   DST_Run13_4->SetHistograms(kShEn);
   DST_Run13_4->SetHistograms(kCCEn);
   DST_Run13_4->SetHistograms(kNCEn);
