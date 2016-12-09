@@ -115,17 +115,34 @@ void DST::SetHistograms(HistogramIndex histIndex) {
   dummyHistogram->SetLineColor(histIndex + 1);
 
   double BatchPOT = 0;
+  int CurrentSnarlIndex = -1;
+  int CurrentBatchIndex = -1;
+  bool NewSnarlFlag = false;
+  bool NewBatchFlag = false;
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
+    if (TreeChain->GetLeaf("snarl")->GetValue() != CurrentSnarlIndex) {
+      NewSnarlFlag = true;
+      CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
+      CurrentBatchIndex = -1;
+    }
     if (TreeChain->GetLeaf("selectionevent")->GetValue()) {
       if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
         dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
-        BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
+        if (TreeChain->GetLeaf("whichBatch")->GetValue() != CurrentBatchIndex) {
+          NewBatchFlag = true;
+          CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
+        }
+        if (NewBatchFlag && NewSnarlFlag) {
+          BatchPOT += GetLeaf("batchPot")->GetValue();
+          NewBatchFlag = false;
+          NewSnarlFlag = false;
+        }
       }
     }
   }
 
-  dummyHistogram->Scale(1 / (POT*(1E-18)));
+  dummyHistogram->Scale(1 / (BatchPOT*(1E-18)));
   dummyHistogram->Sumw2();
   HistogramVector.push_back(dummyHistogram);
 
