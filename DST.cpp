@@ -37,6 +37,8 @@ void DST::CalculatePOT() {
     file->Close();
   }
 
+
+
   return;
 }
 
@@ -112,16 +114,18 @@ void DST::SetHistograms(HistogramIndex histIndex) {
   dummyHistogram->GetXaxis()->SetTitle(HistogramNameString.HistogramYAxisTitle);
   dummyHistogram->SetLineColor(histIndex + 1);
 
+  double BatchPOT = 0;
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
     if (TreeChain->GetLeaf("selectionevent")->GetValue()) {
       if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
         dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
+        BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
       }
     }
   }
 
-  dummyHistogram->Scale(1 / (POT * (1E-18)));
+  dummyHistogram->Scale(1 / BatchPOT);
   dummyHistogram->Sumw2();
   HistogramVector.push_back(dummyHistogram);
 
