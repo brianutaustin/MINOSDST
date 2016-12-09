@@ -57,7 +57,7 @@ int main() {
   DST_Run13_4->OpenDSTs("timeTree");
   DST_Run13_4->SetBinningScheme();
   DST_Run13_4->SetNumberOfEvents(-1);
-  DST_Run13_4->SetUnslipstackedBatches(0, 5);
+  DST_Run13_4->SetUnslipstackedBatches(4, 5);
   DST_Run13_4->CalculatePOT();
   DST_Run13_4->CodeNameParsing();
   DST_Run13_4->SetHistograms(kShEn);
