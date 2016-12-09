@@ -66,7 +66,7 @@ int main() {
   DST_Run13_4->SetHistograms(kTrEn);
 
   Analysis * shENAna = new Analysis(kShEn);
-  shENAna->SetImageFileFormat("eps");
+  shENAna->SetImageFileFormat("png");
   shENAna->ImportBaseDST(DST_Run12);
   shENAna->ImportCompareDSTs(DST_Run13_1);
   shENAna->ImportCompareDSTs(DST_Run13_2);
@@ -79,7 +79,7 @@ int main() {
 
 
   Analysis * ccENAna = new Analysis(kCCEn);
-  ccENAna->SetImageFileFormat("eps");
+  ccENAna->SetImageFileFormat("png");
   ccENAna->ImportBaseDST(DST_Run12);
   ccENAna->ImportCompareDSTs(DST_Run13_1);
   ccENAna->ImportCompareDSTs(DST_Run13_2);
@@ -91,7 +91,7 @@ int main() {
   ccENAna->DrawRatioHistogram();
 
   Analysis * ncENAna = new Analysis(kNCEn);
-  ncENAna->SetImageFileFormat("eps");
+  ncENAna->SetImageFileFormat("png");
   ncENAna->ImportBaseDST(DST_Run12);
   ncENAna->ImportCompareDSTs(DST_Run13_1);
   ncENAna->ImportCompareDSTs(DST_Run13_2);
@@ -103,7 +103,7 @@ int main() {
   ncENAna->DrawRatioHistogram();
 
   Analysis * trENAna = new Analysis(kTrEn);
-  trENAna->SetImageFileFormat("eps");
+  trENAna->SetImageFileFormat("png");
   trENAna->ImportBaseDST(DST_Run12);
   trENAna->ImportCompareDSTs(DST_Run13_1);
   trENAna->ImportCompareDSTs(DST_Run13_2);
