@@ -134,7 +134,7 @@ void DST::SetHistograms(HistogramIndex histIndex) {
           CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
         }
         if (NewBatchFlag && NewSnarlFlag) {
-          BatchPOT += GetLeaf("batchPot")->GetValue();
+          BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
           NewBatchFlag = false;
           NewSnarlFlag = false;
         }
