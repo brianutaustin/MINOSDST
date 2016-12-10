@@ -8,7 +8,7 @@ int main() {
   DST_Run12->OpenDSTs("timeTree");
   DST_Run12->SetBinningScheme();
   DST_Run12->SetNumberOfEvents(-1);
-  DST_Run12->SetUnslipstackedBatches(0, 5);
+  DST_Run12->SetUnslipstackedBatches(4, 5);
   DST_Run12->CalculatePOT();
   DST_Run12->CalculateBatchPOT();
   DST_Run12->CodeNameParsing();
@@ -21,7 +21,7 @@ int main() {
   DST_Run13_1->OpenDSTs("timeTree");
   DST_Run13_1->SetBinningScheme();
   DST_Run13_1->SetNumberOfEvents(-1);
-  DST_Run13_1->SetUnslipstackedBatches(0, 5);
+  DST_Run13_1->SetUnslipstackedBatches(4, 5);
   DST_Run13_1->CalculatePOT();
   DST_Run13_1->CalculateBatchPOT();
   DST_Run13_1->CodeNameParsing();
@@ -35,7 +35,7 @@ int main() {
   DST_Run13_2->OpenDSTs("timeTree");
   DST_Run13_2->SetBinningScheme();
   DST_Run13_2->SetNumberOfEvents(-1);
-  DST_Run13_2->SetUnslipstackedBatches(0, 5);
+  DST_Run13_2->SetUnslipstackedBatches(4, 5);
   DST_Run13_2->CalculatePOT();
   DST_Run13_2->CalculateBatchPOT();
   DST_Run13_2->CodeNameParsing();
@@ -48,7 +48,7 @@ int main() {
   DST_Run13_3->OpenDSTs("timeTree");
   DST_Run13_3->SetBinningScheme();
   DST_Run13_3->SetNumberOfEvents(-1);
-  DST_Run13_3->SetUnslipstackedBatches(0, 5);
+  DST_Run13_3->SetUnslipstackedBatches(4, 5);
   DST_Run13_3->CalculatePOT();
   DST_Run13_3->CalculateBatchPOT();
   DST_Run13_3->CodeNameParsing();
