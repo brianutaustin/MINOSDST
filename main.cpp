@@ -5,6 +5,7 @@
 
 int main() {
   DST * DST_Run12 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run12/");
+  //DST * DST_Run12 = new DST("./Run12/");
   DST_Run12->OpenDSTs("timeTree");
   DST_Run12->SetBinningScheme();
   DST_Run12->SetNumberOfEvents(-1);
@@ -63,6 +64,7 @@ int main() {
   DST_Run13_4->SetNumberOfEvents(-1);
   DST_Run13_4->SetUnslipstackedBatches(0, 5);
   DST_Run13_4->CalculatePOT();
+  DST_Run13_4->CalculateBatchPOT();
   DST_Run13_4->CodeNameParsing();
   DST_Run13_4->SetHistograms(kShEn);
   DST_Run13_4->SetHistograms(kCCEn);

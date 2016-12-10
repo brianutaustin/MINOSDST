@@ -44,12 +44,10 @@ void DST::CalculateBatchPOT() {
   BatchPOT = 0;
   int CurrentSnarlIndex = -1;
   int CurrentBatchIndex = -1;
-  bool NewSnarlFlag = false;
   bool NewBatchFlag = false;
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
     if (TreeChain->GetLeaf("snarl")->GetValue() != CurrentSnarlIndex) {
-      NewSnarlFlag = true;
       CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
       CurrentBatchIndex = -1;
     }
@@ -58,15 +56,15 @@ void DST::CalculateBatchPOT() {
         NewBatchFlag = true;
         CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
       }
-      if (NewBatchFlag && NewSnarlFlag) {
+      if (NewBatchFlag) {
+        //std::cout << "Event: " << i << std::endl;
         BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
         NewBatchFlag = false;
-        NewSnarlFlag = false;
       }
     }
   }
 
-  BatchPOT *= 1E12;
+  BatchPOT = BatchPOT*1E12;
 
   return;
 }
