@@ -66,6 +66,8 @@ void DST::CalculateBatchPOT() {
     }
   }
 
+  BatchPOT *= 1E13;
+
   return;
 }
 
