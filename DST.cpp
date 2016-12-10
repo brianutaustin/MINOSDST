@@ -37,7 +37,34 @@ void DST::CalculatePOT() {
     file->Close();
   }
 
+  return;
+}
 
+void DST::CalculateBatchPOT() {
+  BatchPOT = 0;
+  int CurrentSnarlIndex = -1;
+  int CurrentBatchIndex = -1;
+  bool NewSnarlFlag = false;
+  bool NewBatchFlag = false;
+  for (int i = 0; i < NumberOfEvents; i++) {
+    TreeChain->GetEntry(i);
+    if (TreeChain->GetLeaf("snarl")->GetValue() != CurrentSnarlIndex) {
+      NewSnarlFlag = true;
+      CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
+      CurrentBatchIndex = -1;
+    }
+    if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
+      if (TreeChain->GetLeaf("whichBatch")->GetValue() != CurrentBatchIndex) {
+        NewBatchFlag = true;
+        CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
+      }
+      if (NewBatchFlag && NewSnarlFlag) {
+        BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
+        NewBatchFlag = false;
+        NewSnarlFlag = false;
+      }
+    }
+  }
 
   return;
 }
@@ -63,7 +90,9 @@ void DST::CodeNameParsing() {
   RunCodeName = token;
   token = RunCodeName.erase(3, RunCodeName.length() - 5);
   RunCodeName = token;
-  std::cout << "POT " << RunCodeName << " :" << POT << "." << std::endl;
+
+  std::cout << "POT       " << RunCodeName << " :" << POT << "." << std::endl;
+  std::cout << "Batch POT " << RunCodeName << " :" << POT << "." << std::endl;
 
   return;
 }
@@ -114,30 +143,11 @@ void DST::SetHistograms(HistogramIndex histIndex) {
   dummyHistogram->GetXaxis()->SetTitle(HistogramNameString.HistogramYAxisTitle);
   dummyHistogram->SetLineColor(histIndex + 1);
 
-  double BatchPOT = 0;
-  int CurrentSnarlIndex = -1;
-  int CurrentBatchIndex = -1;
-  bool NewSnarlFlag = false;
-  bool NewBatchFlag = false;
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
-    if (TreeChain->GetLeaf("snarl")->GetValue() != CurrentSnarlIndex) {
-      NewSnarlFlag = true;
-      CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
-      CurrentBatchIndex = -1;
-    }
     if (TreeChain->GetLeaf("selectionevent")->GetValue()) {
       if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
         dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
-        if (TreeChain->GetLeaf("whichBatch")->GetValue() != CurrentBatchIndex) {
-          NewBatchFlag = true;
-          CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
-        }
-        if (NewBatchFlag && NewSnarlFlag) {
-          BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
-          NewBatchFlag = false;
-          NewSnarlFlag = false;
-        }
       }
     }
   }

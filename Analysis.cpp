@@ -138,7 +138,6 @@ void Analysis::GetPlotString() {
   PlotString.RatioHistogramTitle = "Ratio Comparison of " + VariableName;
   for (int i = 0; i < CompareRuns.size(); i++) {
     PlotString.RatioHistogramLegend.push_back(CompareRuns.at(i).TheCodeName + "/" + BaseRun.TheCodeName);
-    std::cout << PlotString.RatioHistogramLegend.at(i) << std::endl;
   }
   PlotString.HistogramPlotFileName = "spectrum_" + VariableName + "." + ImageFormat;
   PlotString.RatioHistogramPlotFileName = "ratio_" + VariableName + "." + ImageFormat;
