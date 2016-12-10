@@ -71,6 +71,7 @@ int main() {
   DST_Run13_4->SetHistograms(kNCEn);
   DST_Run13_4->SetHistograms(kTrEn);
 
+
   Analysis * shENAna = new Analysis(kShEn);
   shENAna->SetImageFileFormat("png");
   shENAna->ImportBaseDST(DST_Run12);
@@ -79,7 +80,7 @@ int main() {
   shENAna->ImportCompareDSTs(DST_Run13_3);
   shENAna->ImportCompareDSTs(DST_Run13_4);
   shENAna->GetPlotString();
-  shENAna->DrawWithLogScale(true);
+  shENAna->DrawWithLogScale(false);
   shENAna->DrawHistogram();
   shENAna->DrawRatioHistogram();
 
@@ -92,7 +93,7 @@ int main() {
   ccENAna->ImportCompareDSTs(DST_Run13_3);
   ccENAna->ImportCompareDSTs(DST_Run13_4);
   ccENAna->GetPlotString();
-  ccENAna->DrawWithLogScale(true);
+  ccENAna->DrawWithLogScale(false);
   ccENAna->DrawHistogram();
   ccENAna->DrawRatioHistogram();
 
@@ -104,7 +105,7 @@ int main() {
   ncENAna->ImportCompareDSTs(DST_Run13_3);
   ncENAna->ImportCompareDSTs(DST_Run13_4);
   ncENAna->GetPlotString();
-  ncENAna->DrawWithLogScale(true);
+  ncENAna->DrawWithLogScale(false);
   ncENAna->DrawHistogram();
   ncENAna->DrawRatioHistogram();
 
@@ -116,7 +117,7 @@ int main() {
   trENAna->ImportCompareDSTs(DST_Run13_3);
   trENAna->ImportCompareDSTs(DST_Run13_4);
   trENAna->GetPlotString();
-  trENAna->DrawWithLogScale(true);
+  trENAna->DrawWithLogScale(false);
   trENAna->DrawHistogram();
   trENAna->DrawRatioHistogram();
 

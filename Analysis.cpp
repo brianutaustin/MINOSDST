@@ -49,7 +49,7 @@ void Analysis::DrawHistogram() {
     BaseRun.TheHistogram->GetYaxis()->SetTitle(PlotString.HistogramYAxisTitle);
     BaseRun.TheHistogram->SetLineColor(kBlack);
     BaseRun.TheHistogram->SetLineWidth(3);
-    BaseRun.TheHistogram->GetYaxis()->SetRangeUser(1, 10000);
+    BaseRun.TheHistogram->GetYaxis()->SetRangeUser(0, 1);
     BaseRun.TheHistogram->Draw();
     Legend->AddEntry(BaseRun.TheHistogram, BaseRun.TheCodeName.c_str(), "l");
   }

@@ -57,14 +57,14 @@ void DST::CalculateBatchPOT() {
         CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
       }
       if (NewBatchFlag) {
-        //std::cout << "Event: " << i << std::endl;
+        // std::cout << "Event: " << i << std::endl;
         BatchPOT += TreeChain->GetLeaf("batchPot")->GetValue();
         NewBatchFlag = false;
       }
     }
   }
 
-  BatchPOT = BatchPOT*1E12;
+  BatchPOT = BatchPOT * 1E12;
 
   return;
 }
@@ -152,7 +152,11 @@ void DST::SetHistograms(HistogramIndex histIndex) {
     }
   }
 
-  dummyHistogram->Scale(1 / (BatchPOT*(1E-18)));
+  // Problem normalize by POT
+  // dummyHistogram->Scale(1 / (BatchPOT*(1E-18)));
+  for (int i = 1; i <= dummyHistogram->GetXaxis()->GetNbins(); i++) {
+    dummyHistogram->SetBinContent(i, dummyHistogram->GetBinContent(i) / dummyHistogram->GetBinWidth(i));
+  }
   dummyHistogram->Sumw2();
   HistogramVector.push_back(dummyHistogram);
 
@@ -171,25 +175,25 @@ void DST::SetNumberOfEvents(int flag) {
 
 void DST::SetBinningScheme() {
 /* Tom's binning
-  for (int k = 0; k <= 40; k++) {
+   for (int k = 0; k <= 40; k++) {
     BinningScheme[k] = k * 0.25;
-  }
-  for (int k = 41; k <= 42; k++) {
+   }
+   for (int k = 41; k <= 42; k++) {
     BinningScheme[k] = 10 + 0.5 * (k - 40);
-  }
-  for (int k = 43; k <= 43; k++) {
+   }
+   for (int k = 43; k <= 43; k++) {
     BinningScheme[k] = 11 + (k - 42);
-  }
-  for (int k = 44; k <= 48; k++) {
+   }
+   for (int k = 44; k <= 48; k++) {
     BinningScheme[k] = 12 + 2 * (k - 43);
-  }
-  for (int k = 49; k <= 50; k++) {
+   }
+   for (int k = 49; k <= 50; k++) {
     BinningScheme[k] = 22 + 4 * (k - 48);
-  }
-*/
+   }
+ */
 
 /* Dung's binning
-*/
+ */
   for (int k = 0; k <= 10; k++) {
     BinningScheme[k] = k;
   }
