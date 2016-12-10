@@ -48,12 +48,12 @@ void DST::CalculateBatchPOT() {
   bool NewBatchFlag = false;
   for (int i = 0; i < NumberOfEvents; i++) {
     TreeChain->GetEntry(i);
+    if (TreeChain->GetLeaf("snarl")->GetValue() != CurrentSnarlIndex) {
+      NewSnarlFlag = true;
+      CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
+      CurrentBatchIndex = -1;
+    }
     if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
-      if (TreeChain->GetLeaf("snarl")->GetValue() != CurrentSnarlIndex) {
-        NewSnarlFlag = true;
-        CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
-        CurrentBatchIndex = -1;
-      }
       if (TreeChain->GetLeaf("whichBatch")->GetValue() != CurrentBatchIndex) {
         NewBatchFlag = true;
         CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
@@ -92,7 +92,7 @@ void DST::CodeNameParsing() {
   RunCodeName = token;
 
   std::cout << "POT       " << RunCodeName << " :" << POT << "." << std::endl;
-  std::cout << "Batch POT " << RunCodeName << " :" << POT << "." << std::endl;
+  std::cout << "Batch POT " << RunCodeName << " :" << BatchPOT << "." << std::endl;
 
   return;
 }
