@@ -12,6 +12,7 @@ int main() {
   DST_Run12->SetUnslipstackedBatches(4, 5);
   DST_Run12->CalculatePOT();
   DST_Run12->CalculateBatchPOT();
+  DST_Run12->CalculateAllBatchPOT();
   DST_Run12->CodeNameParsing();
   DST_Run12->SetHistograms(kShEn);
   DST_Run12->SetHistograms(kCCEn);
@@ -26,6 +27,7 @@ int main() {
   DST_Run13_1->SetUnslipstackedBatches(4, 5);
   DST_Run13_1->CalculatePOT();
   DST_Run13_1->CalculateBatchPOT();
+  DST_Run13_1->CalculateAllBatchPOT();
   DST_Run13_1->CodeNameParsing();
   DST_Run13_1->SetHistograms(kShEn);
   DST_Run13_1->SetHistograms(kCCEn);
@@ -41,6 +43,7 @@ int main() {
   DST_Run13_2->SetUnslipstackedBatches(4, 5);
   DST_Run13_2->CalculatePOT();
   DST_Run13_2->CalculateBatchPOT();
+  DST_Run13_2->CalculateAllBatchPOT();
   DST_Run13_2->CodeNameParsing();
   DST_Run13_2->SetHistograms(kShEn);
   DST_Run13_2->SetHistograms(kCCEn);
@@ -55,6 +58,7 @@ int main() {
   DST_Run13_3->SetUnslipstackedBatches(4, 5);
   DST_Run13_3->CalculatePOT();
   DST_Run13_3->CalculateBatchPOT();
+  DST_Run13_3->CalculateAllBatchPOT();
   DST_Run13_3->CodeNameParsing();
   DST_Run13_3->SetHistograms(kShEn);
   DST_Run13_3->SetHistograms(kCCEn);
@@ -69,6 +73,7 @@ int main() {
   DST_Run13_4->SetUnslipstackedBatches(4, 5);
   DST_Run13_4->CalculatePOT();
   DST_Run13_4->CalculateBatchPOT();
+  DST_Run13_4->CalculateAllBatchPOT();
   DST_Run13_4->CodeNameParsing();
   DST_Run13_4->SetHistograms(kShEn);
   DST_Run13_4->SetHistograms(kCCEn);

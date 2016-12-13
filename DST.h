@@ -44,6 +44,7 @@ public:
   void OpenDSTs(std::string); // Input: Name of anaTree
   void CalculatePOT();
   void CalculateBatchPOT();
+  void CalculateAllBatchPOT();
   void CodeNameParsing(); // Each run has a code name
 
   // GET
@@ -69,6 +70,7 @@ private:
   TH1D* hTOTALPOT;
   double POT;
   double BatchPOT;
+  double AllBatchPOT;
 
   std::string RunCodeName;
 
