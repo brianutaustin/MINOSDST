@@ -9,7 +9,7 @@ int main() {
   DST_Run12->OpenDSTs("timeTree");
   DST_Run12->SetBinningScheme();
   DST_Run12->SetNumberOfEvents(-1);
-  DST_Run12->SetUnslipstackedBatches(0, 5);
+  DST_Run12->SetUnslipstackedBatches(4, 5);
   DST_Run12->CalculatePOT();
   DST_Run12->CalculateBatchPOT();
   DST_Run12->CodeNameParsing();
@@ -22,7 +22,7 @@ int main() {
   DST_Run13_1->OpenDSTs("timeTree");
   DST_Run13_1->SetBinningScheme();
   DST_Run13_1->SetNumberOfEvents(-1);
-  DST_Run13_1->SetUnslipstackedBatches(0, 5);
+  DST_Run13_1->SetUnslipstackedBatches(4, 5);
   DST_Run13_1->CalculatePOT();
   DST_Run13_1->CalculateBatchPOT();
   DST_Run13_1->CodeNameParsing();
@@ -36,7 +36,7 @@ int main() {
   DST_Run13_2->OpenDSTs("timeTree");
   DST_Run13_2->SetBinningScheme();
   DST_Run13_2->SetNumberOfEvents(-1);
-  DST_Run13_2->SetUnslipstackedBatches(0, 5);
+  DST_Run13_2->SetUnslipstackedBatches(4, 5);
   DST_Run13_2->CalculatePOT();
   DST_Run13_2->CalculateBatchPOT();
   DST_Run13_2->CodeNameParsing();
@@ -49,7 +49,7 @@ int main() {
   DST_Run13_3->OpenDSTs("timeTree");
   DST_Run13_3->SetBinningScheme();
   DST_Run13_3->SetNumberOfEvents(-1);
-  DST_Run13_3->SetUnslipstackedBatches(0, 5);
+  DST_Run13_3->SetUnslipstackedBatches(4, 5);
   DST_Run13_3->CalculatePOT();
   DST_Run13_3->CalculateBatchPOT();
   DST_Run13_3->CodeNameParsing();
@@ -62,7 +62,7 @@ int main() {
   DST_Run13_4->OpenDSTs("timeTree");
   DST_Run13_4->SetBinningScheme();
   DST_Run13_4->SetNumberOfEvents(-1);
-  DST_Run13_4->SetUnslipstackedBatches(0, 5);
+  DST_Run13_4->SetUnslipstackedBatches(4, 5);
   DST_Run13_4->CalculatePOT();
   DST_Run13_4->CalculateBatchPOT();
   DST_Run13_4->CodeNameParsing();
@@ -122,16 +122,16 @@ int main() {
   trENAna->DrawRatioHistogram();
 
   Analysis * inElAna = new Analysis(kInEl);
-  trENAna->SetImageFileFormat("png");
-  trENAna->ImportBaseDST(DST_Run12);
-  trENAna->ImportCompareDSTs(DST_Run13_1);
-  trENAna->ImportCompareDSTs(DST_Run13_2);
-  trENAna->ImportCompareDSTs(DST_Run13_3);
-  trENAna->ImportCompareDSTs(DST_Run13_4);
-  trENAna->GetPlotString();
-  trENAna->DrawWithLogScale(false);
-  trENAna->DrawHistogram();
-  trENAna->DrawRatioHistogram();
+  inElAna->SetImageFileFormat("png");
+  inElAna->ImportBaseDST(DST_Run12);
+  inElAna->ImportCompareDSTs(DST_Run13_1);
+  inElAna->ImportCompareDSTs(DST_Run13_2);
+  inElAna->ImportCompareDSTs(DST_Run13_3);
+  inElAna->ImportCompareDSTs(DST_Run13_4);
+  inElAna->GetPlotString();
+  inElAna->DrawWithLogScale(false);
+  inElAna->DrawHistogram();
+  inElAna->DrawRatioHistogram();
 
   return 0;
 }

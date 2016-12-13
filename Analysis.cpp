@@ -50,7 +50,8 @@ void Analysis::DrawHistogram() {
     BaseRun.TheHistogram->SetLineColor(kBlack);
     BaseRun.TheHistogram->SetLineWidth(3);
     //BaseRun.TheHistogram->GetYaxis()->SetRangeUser(0, 1);
-    BaseRun.TheHistogram->Draw("Lhist");
+    BaseRun.TheHistogram->Draw("E1");
+    BaseRun.TheHistogram->Draw("SAME Lhist");
     Legend->AddEntry(BaseRun.TheHistogram, BaseRun.TheCodeName.c_str(), "l");
   }
 
@@ -59,6 +60,7 @@ void Analysis::DrawHistogram() {
   } else {
     for (int i = 0; i < CompareRuns.size(); i++) {
       CompareRuns.at(i).TheHistogram->SetLineColor(i + 2);
+      CompareRuns.at(i).TheHistogram->Draw("SAME E1");
       CompareRuns.at(i).TheHistogram->Draw("SAME Lhist");
       Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
     }
@@ -91,9 +93,11 @@ void Analysis::DrawRatioHistogram() {
     Legend->AddEntry(CompareRuns.at(i).TheRatioHistogram, PlotString.RatioHistogramLegend.at(i), "l");
   }
 
-  CompareRuns.at(0).TheRatioHistogram->Draw("Lhist");
+  CompareRuns.at(0).TheRatioHistogram->Draw("E1");
+  CompareRuns.at(0).TheRatioHistogram->Draw("SAME Lhist");
   CompareRuns.at(0).TheRatioHistogram->GetYaxis()->SetRangeUser(0.7, 1.3);
   for (int i = 1; i < CompareRuns.size(); i++) {
+    CompareRuns.at(i).TheRatioHistogram->Draw("SAME E1");
     CompareRuns.at(i).TheRatioHistogram->Draw("SAME Lhist");
   }
 	TLine * UnityLine = new TLine(0, 1, 30, 1);
