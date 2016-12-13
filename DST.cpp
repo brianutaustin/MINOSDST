@@ -142,7 +142,13 @@ void DST::SetUnslipstackedBatches(int min, int max) {
 void DST::SetHistograms(HistogramIndex histIndex) {
 
   GetHistogramNameStrings(histIndex);
-  TH1D * dummyHistogram = new TH1D(HistogramNameString.HistogramName, HistogramNameString.HistogramTitle, NBins, BinningScheme);
+  TH1D * dummyHistogram;
+  if (histIndex != kInEl) {
+    dummyHistogram = new TH1D(HistogramNameString.HistogramName, HistogramNameString.HistogramTitle, NBins, BinningScheme);
+  } else if (histIndex == kInEl) {
+    dummyHistogram = new TH1D(HistogramNameString.HistogramName, HistogramNameString.HistogramTitle, 10, 0, 1);
+  }
+
   dummyHistogram->GetXaxis()->SetTitle(HistogramNameString.HistogramXAxisTitle);
   dummyHistogram->GetXaxis()->SetTitle(HistogramNameString.HistogramYAxisTitle);
   dummyHistogram->SetLineColor(histIndex + 1);
@@ -153,7 +159,7 @@ void DST::SetHistograms(HistogramIndex histIndex) {
       if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
         if (histIndex != kInEl) {
           dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
-        } else {
+        } else if (histIndex == kInEl) {
           double Enn = TreeChain->GetLeaf("energyCC")->GetValue();
           double Enl = TreeChain->GetLeaf("trkEn")->GetValue();
           dummyHistogram->Fill((Enn - Enl) / Enn);
