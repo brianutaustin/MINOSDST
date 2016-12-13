@@ -155,7 +155,7 @@ void DST::SetHistograms(HistogramIndex histIndex) {
   for (int i = 1; i <= dummyHistogram->GetXaxis()->GetNbins(); i++) {
     dummyHistogram->SetBinContent(i, dummyHistogram->GetBinContent(i) / dummyHistogram->GetBinWidth(i));
   }
-  dummyHistogram->Scale(1 / (BatchPOT*(1E-18)));
+  dummyHistogram->Scale(1 / (POT*(1E-18)));
   dummyHistogram->Sumw2();
   HistogramVector.push_back(dummyHistogram);
 
