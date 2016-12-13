@@ -23,7 +23,8 @@ enum HistogramIndex {
   kShEn,
   kCCEn,
   kNCEn,
-  kTrEn
+  kTrEn,
+  kInEl,
 };
 
 struct HISTOGRAMSTRING {

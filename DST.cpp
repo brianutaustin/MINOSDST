@@ -117,6 +117,10 @@ void DST::GetHistogramNameStrings(HistogramIndex histIndex) {
       variableName = "energyNC";
       break;
     }
+    case kInEl: {
+      variableName = "inElasticity"
+      break;
+    }
   }
 
   HistogramNameString.HistogramName = variableName + RunCodeName;
