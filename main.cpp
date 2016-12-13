@@ -121,5 +121,17 @@ int main() {
   trENAna->DrawHistogram();
   trENAna->DrawRatioHistogram();
 
+  Analysis * inElAna = new Analysis(kInEl);
+  trENAna->SetImageFileFormat("png");
+  trENAna->ImportBaseDST(DST_Run12);
+  trENAna->ImportCompareDSTs(DST_Run13_1);
+  trENAna->ImportCompareDSTs(DST_Run13_2);
+  trENAna->ImportCompareDSTs(DST_Run13_3);
+  trENAna->ImportCompareDSTs(DST_Run13_4);
+  trENAna->GetPlotString();
+  trENAna->DrawWithLogScale(false);
+  trENAna->DrawHistogram();
+  trENAna->DrawRatioHistogram();
+
   return 0;
 }
