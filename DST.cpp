@@ -118,7 +118,7 @@ void DST::GetHistogramNameStrings(HistogramIndex histIndex) {
       break;
     }
     case kInEl: {
-      variableName = "inElasticity"
+      variableName = "inElasticity";
       break;
     }
   }
@@ -151,7 +151,13 @@ void DST::SetHistograms(HistogramIndex histIndex) {
     TreeChain->GetEntry(i);
     if (TreeChain->GetLeaf("selectionevent")->GetValue()) {
       if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= UnslipstackedMinBatchIndex) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= UnslipstackedMaxBatchIndex)) {
-        dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
+        if (histIndex != kInEl) {
+          dummyHistogram->Fill(TreeChain->GetLeaf(HistogramNameString.TreeChainHistogramName)->GetValue());
+        } else {
+          double Enn = TreeChain->GetLeaf("energyCC")->GetValue();
+          double Enl = TreeChain->GetLeaf("trkEn")->GetValue();
+          dummyHistogram->Fill((Enn-Enl)/Enn);
+        }
       }
     }
   }

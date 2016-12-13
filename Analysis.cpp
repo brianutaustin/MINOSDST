@@ -132,6 +132,10 @@ void Analysis::GetPlotString() {
       VariableName = "energyNC";
       break;
     }
+    case kInEl: {
+      VariableName = "inElasticity";
+      break;
+    }
   }
 
   PlotString.HistogramTitle = "Comparison of " + VariableName;
