@@ -156,7 +156,7 @@ void DST::SetHistograms(HistogramIndex histIndex) {
         } else {
           double Enn = TreeChain->GetLeaf("energyCC")->GetValue();
           double Enl = TreeChain->GetLeaf("trkEn")->GetValue();
-          dummyHistogram->Fill((Enn-Enl)/Enn);
+          dummyHistogram->Fill((Enn - Enl) / Enn);
         }
       }
     }

@@ -17,6 +17,7 @@ int main() {
   DST_Run12->SetHistograms(kCCEn);
   DST_Run12->SetHistograms(kNCEn);
   DST_Run12->SetHistograms(kTrEn);
+  DST_Run12->SetHistograms(kInEl);
 
   DST * DST_Run13_1 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run13_Oct15/");
   DST_Run13_1->OpenDSTs("timeTree");
@@ -30,6 +31,7 @@ int main() {
   DST_Run13_1->SetHistograms(kCCEn);
   DST_Run13_1->SetHistograms(kNCEn);
   DST_Run13_1->SetHistograms(kTrEn);
+  DST_Run13_1->SetHistograms(kInEl);
 
 
   DST * DST_Run13_2 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run13_Dec15/");
@@ -44,6 +46,7 @@ int main() {
   DST_Run13_2->SetHistograms(kCCEn);
   DST_Run13_2->SetHistograms(kNCEn);
   DST_Run13_2->SetHistograms(kTrEn);
+  DST_Run13_2->SetHistograms(kInEl);
 
   DST * DST_Run13_3 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run13_Mar16/");
   DST_Run13_3->OpenDSTs("timeTree");
@@ -57,6 +60,7 @@ int main() {
   DST_Run13_3->SetHistograms(kCCEn);
   DST_Run13_3->SetHistograms(kNCEn);
   DST_Run13_3->SetHistograms(kTrEn);
+  DST_Run13_3->SetHistograms(kInEl);
 
   DST * DST_Run13_4 = new DST("/minos/app/dphan/HornShiftStudy/WithBatch/MINOSDST/Run13_May16/");
   DST_Run13_4->OpenDSTs("timeTree");
@@ -70,6 +74,7 @@ int main() {
   DST_Run13_4->SetHistograms(kCCEn);
   DST_Run13_4->SetHistograms(kNCEn);
   DST_Run13_4->SetHistograms(kTrEn);
+  DST_Run13_4->SetHistograms(kInEl);
 
 
   Analysis * shENAna = new Analysis(kShEn);

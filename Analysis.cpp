@@ -59,7 +59,7 @@ void Analysis::DrawHistogram() {
     std::cout << "Compare DST has to be input." << std::endl;
   } else {
     for (int i = 0; i < CompareRuns.size(); i++) {
-      CompareRuns.at(i).TheHistogram->SetLineColor(i + 2);
+      CompareRuns.at(i).TheHistogram->SetLineColor(i + 4);
       CompareRuns.at(i).TheHistogram->Draw("SAME E1");
       CompareRuns.at(i).TheHistogram->Draw("SAME Lhist");
       Legend->AddEntry(CompareRuns.at(i).TheHistogram, CompareRuns.at(i).TheCodeName.c_str(), "l");
