@@ -152,11 +152,11 @@ void DST::SetHistograms(HistogramIndex histIndex) {
     }
   }
 
+  dummyHistogram->Sumw2();
   dummyHistogram->Scale(1 / dummyHistogram->Integral());
   for (int i = 1; i <= dummyHistogram->GetXaxis()->GetNbins(); i++) {
     dummyHistogram->SetBinContent(i, dummyHistogram->GetBinContent(i) / dummyHistogram->GetBinWidth(i));
   }
-  dummyHistogram->Sumw2();
   HistogramVector.push_back(dummyHistogram);
 
   return;
