@@ -199,8 +199,8 @@ void DST::SetHistograms(HistogramIndex histIndex) {
 
   dummyHistogram->Sumw2();
   // Change Normalization Here
-  // dummyHistogram->Scale(1 / dummyHistogram->Integral());
-  dummyHistogram->Scale(1 / (POT * (BatchPOT / AllBatchPOT)));
+  dummyHistogram->Scale(1 / dummyHistogram->Integral());
+  //dummyHistogram->Scale(1 / (POT * (BatchPOT / AllBatchPOT)));
 
 
   for (int i = 1; i <= dummyHistogram->GetXaxis()->GetNbins(); i++) {
