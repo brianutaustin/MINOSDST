@@ -64,8 +64,6 @@ void DST::CalculateBatchPOT() {
     }
   }
 
-  BatchPOT = BatchPOT * 1E12;
-
   return;
 }
 
@@ -80,7 +78,7 @@ void DST::CalculateAllBatchPOT() {
       CurrentSnarlIndex = TreeChain->GetLeaf("snarl")->GetValue();
       CurrentBatchIndex = -1;
     }
-    if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= 0) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= 5)) {
+    if ((TreeChain->GetLeaf("whichBatch")->GetValue() >= 0) && (TreeChain->GetLeaf("whichBatch")->GetValue() <= 6)) {
       if (TreeChain->GetLeaf("whichBatch")->GetValue() != CurrentBatchIndex) {
         NewBatchFlag = true;
         CurrentBatchIndex = TreeChain->GetLeaf("whichBatch")->GetValue();
@@ -92,8 +90,6 @@ void DST::CalculateAllBatchPOT() {
       }
     }
   }
-
-  AllBatchPOT = AllBatchPOT * 1E12;
 
   return;
 }
@@ -199,8 +195,9 @@ void DST::SetHistograms(HistogramIndex histIndex) {
 
   dummyHistogram->Sumw2();
   // Change Normalization Here
-  dummyHistogram->Scale(1 / dummyHistogram->Integral());
-  //dummyHistogram->Scale(1 / (POT * (BatchPOT / AllBatchPOT)));
+  //dummyHistogram->Scale(1 / dummyHistogram->Integral());
+  std::cout << "POT ratio: " << BatchPOT / AllBatchPOT << std::endl;
+  dummyHistogram->Scale(1 / (POT * (BatchPOT / AllBatchPOT)));
 
 
   for (int i = 1; i <= dummyHistogram->GetXaxis()->GetNbins(); i++) {
